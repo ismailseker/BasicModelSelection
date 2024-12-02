@@ -38,3 +38,23 @@ knn_cv.fit(x,y)
 
 print("best parameter",knn_cv.best_params_)
 print("best accuracy",knn_cv.best_score_)
+
+# %% Grid search CV with logistic regression
+
+x = x[:100,:]
+y = y[:100] 
+
+from sklearn.linear_model import LogisticRegression
+
+# grid = {"C":np.logspace(-3,3,7),"penalty":[["l1","l2"],'solver':['liblinear','saga']} # l1 = lasso ve l2 = ridge
+grid = {"C":np.logspace(-3, 3, 7),"penalty":["l1","l2"],'solver':['liblinear','saga']}
+
+logreg = LogisticRegression()
+logreg_cv = GridSearchCV(logreg,grid,cv = 10)
+logreg_cv.fit(x,y)
+
+print("tuned hyperparameters: (best parameters): ",logreg_cv.best_params_)
+print("accuracy: ",logreg_cv.best_score_)
+
+
+
